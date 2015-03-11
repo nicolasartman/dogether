@@ -1,0 +1,19 @@
+# Settings
+projectDirectory   = "$CWD"
+excludeDirectories = "{node_modules}"
+excludeFiles = "{*.pyc}"
+
+# Coding standards
+[ source.js ]
+softTabs = false
+
+[ source.css ]
+softTabs = false
+
+[ text.html ]
+softTabs = false
+
+# TM Env Vars
+TM_PROJECT_DIRECTORY = "$projectDirectory"
+TM_JSLINTMATE_JSHINT_OPTIONS_FILE = "$CWD/.jshintrc"
+TM_JSLINTMATE_DEFAULT_LINTER = "jshint"

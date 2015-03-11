@@ -1,0 +1,26 @@
+{
+	"name": "dogether",
+	"version": "0.0.1",
+	"authors": [
+		"Ben Jaffe <jaffe.ben@gmail.com>",
+		"Nicolas Artman <nicolas.artman@gmail.com"
+	],
+	"description": "Do together",
+	"moduleType": [
+		"node"
+	],
+	"license": "MIT",
+	"private": true,
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"lodash": "~3.5.0",
+		"react": "~0.13.0"
+	}
+}
+

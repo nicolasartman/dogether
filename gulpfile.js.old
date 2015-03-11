@@ -1,0 +1,96 @@
+var gulp = require('gulp');
+var $ = require('gulp-load-plugins')();
+
+var src = {};
+
+var es = require('event-stream');
+var babel = require('gulp-babel');
+var gutil = require('gulp-util');
+var sourcemaps = require('gulp-sourcemaps');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var watchify = require('watchify');
+var browserify = require('browserify');
+var runSequence = require('run-sequence');
+var del = require('del');
+var argv = require('minimist')(process.argv.slice(2));
+
+var RELEASE = !!argv.release;
+
+
+
+var bundler = watchify(browserify('./src/index.js', watchify.args));
+// add any other browserify options or transforms here
+bundler.transform('brfs');
+
+
+gulp.task('js', bundle); // so you can run `gulp js` to build the file
+bundler.on('update', bundle); // on any dep update, runs the bundler
+bundler.on('log', gutil.log); // output build logs to terminal
+
+function bundle() {
+	return bundler.bundle()
+		// log errors if they happen
+		.on('error', gutil.log.bind(gutil, 'Browserify Error'))
+		.pipe(source('bundle.js'))
+			.pipe(babel())
+		// optional, remove if you dont want sourcemaps
+			.pipe(buffer())
+			.pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
+			.pipe(sourcemaps.write('./')) // writes .map file
+		//
+		.pipe(gulp.dest('./build'));
+}
+
+
+
+gulp.task('build', ['clean'], function(cb) {
+  runSequence(['assets', 'styles', 'js'], cb);
+});
+
+
+
+// Clean output directory
+gulp.task('clean', del.bind(
+  null, ['.tmp', 'build/*', '!build/.git'], {dot: true}
+));
+
+
+
+gulp.task('scripts', function(){
+	return gulp.src('src/**.js')
+
+		.pipe(gulp.dest('build'));
+});
+
+
+
+
+gulp.task('assets', function() {
+	src.assets = [
+		'src/assets/**'
+	];
+
+	return gulp.src(src.assets)
+		.pipe($.changed('build')) // only changed files
+		.pipe(gulp.dest('build'+'/assets')) // pipe them to our destination
+    .pipe($.size({title: 'assets'})); // display sizes
+});
+
+
+// CSS style sheets
+gulp.task('styles', function() {
+  src.styles = 'src/styles/**/*.{css,scss}';
+  return gulp.src(src.styles)
+    .pipe($.plumber())
+    .pipe($.sass({
+      sourceMap: !RELEASE,
+      sourceMapBasepath: __dirname
+    }))
+    .on('error', console.error.bind(console))
+    // .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
+    // .pipe($.csscomb())
+    // .pipe($.if(RELEASE, $.minifyCss()))
+    .pipe(gulp.dest('build/css'))
+    .pipe($.size({title: 'styles'}));
+});
