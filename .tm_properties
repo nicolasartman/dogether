@@ -1,19 +1,22 @@
 # Settings
 projectDirectory   = "$CWD"
-excludeDirectories = "{node_modules}"
-excludeFiles = "{*.pyc}"
+excludeDirectories = "{node_modules,build}"
 
-# Coding standards
-[ source.js ]
-softTabs = false
+# Coding standards - TODO: fix the syntax
+# [ source.js ]
+# softTabs = false
+# tabSize  = 2
 
-[ source.css ]
-softTabs = false
+# [ source.css ]
+# softTabs = false
+# tabSize  = 2
 
-[ text.html ]
-softTabs = false
+# [ text.html ]
+# softTabs = false
+# tabSize  = 2
 
 # TM Env Vars
 TM_PROJECT_DIRECTORY = "$projectDirectory"
-TM_JSLINTMATE_JSHINT_OPTIONS_FILE = "$CWD/.jshintrc"
+TM_JSLINTMATE_JSHINT_OPTIONS_FILE = "$projectDirectory/.jshintrc"
+TM_JSLINTMATE_JSHINT_FILE = "/usr/local/lib/node_modules/jshint/dist/jshint.js"
 TM_JSLINTMATE_DEFAULT_LINTER = "jshint"
