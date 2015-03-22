@@ -82,7 +82,7 @@ function bundleJS(watch) {
 			.pipe(connect.reload());
 
 	} else {
-		bundler.transform(babelify);		
+		bundler.transform(babelify);
 	}
 
 
@@ -169,7 +169,7 @@ gulp.task('components', function() {
 		.pipe($.changed('build')) // only changed files
 		.pipe(gulp.dest('build/components')) // pipe them to our destination
 		.pipe($.size({title: 'components'})) // display sizes
-		.pipe(connect.reload()); 
+		.pipe(connect.reload());
 });
 
 
@@ -224,11 +224,15 @@ gulp.task('open', function () {
 	var options = {
 		url: 'http://localhost:9090/'
 	}
-	
+
 	gulp.src('./build/index.html')
 	.pipe(open('', options));
 })
 
+
+gulp.task('default', function () {
+  gulp.start('serve');
+});
 
 gulp.task('serve', function () {
  	runSequence(['build-watch', 'connect', 'open']);
