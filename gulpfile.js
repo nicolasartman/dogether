@@ -231,19 +231,19 @@ gulp.task('default', function () {
   return gulp.start('serve');
 });
 
-gulp.task('serve', function () {
- 	runSequence(['build-watch', 'connect', 'open']);
+gulp.task('serve', ['build-watch', 'connect'], function () {
+  runSequence(['open']);
 });
 
 
 gulp.task('build-watch', ['clean'], function(cb) {
-	runSequence(['browserify-watch', 'css', 'assets', 'libs', 'bower', 'components', 'index'], cb);
-	gulp.watch('src/**/*.{css,scss}', ['css']);
-	gulp.watch('src/assets/**', ['assets']);
-	gulp.watch('bower_components/**', ['bower']);
-	gulp.watch('src/libs/**', ['libs']);
-	gulp.watch('src/components/**', ['components']);
-	gulp.watch('src/index.html', ['index']);
+  runSequence(['browserify-watch', 'css', 'assets', 'libs', 'bower', 'components', 'index'], cb);
+  gulp.watch('src/**/*.{css,scss}', ['css']);
+  // gulp.watch('src/assets/**', ['assets']);
+  // gulp.watch('bower_components/**', ['bower']);
+  // gulp.watch('src/libs/**', ['libs']);
+  // gulp.watch('src/components/**', ['components']);
+  gulp.watch('src/index.html', ['index']);
 });
 
 gulp.task('build', ['clean'], function(cb) {
