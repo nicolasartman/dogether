@@ -28,6 +28,7 @@
     "minimist": "^1.1.1",
     "node-sass": "^3.0.0-pre",
     "react": "^0.12.2",
+    "react-bootstrap": "^0.17.0",
     "react-code-mirror": "^3.0.3",
     "reactify": "^1.1.0",
     "run-sequence": "^1.0.2",
